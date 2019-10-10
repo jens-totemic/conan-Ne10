@@ -20,7 +20,7 @@ index 40e1b72..f7730e8 100644
  set(NE10_VERSION 10)
  
 +if (NE10_BUILD_ARM_ONLY)
-+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ARM_ONLY")
++    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DARM_ONLY")
 +endif()
 +
  if(BUILD_DEBUG)
@@ -31,7 +31,7 @@ index 40e1b72..f7730e8 100644
  # This is a verbose fail-fast in case we are trying to compile for non-ARM;
  # otherwise it would fail at `make` with obscure errors.
 -if(GNULINUX_PLATFORM AND (NOT CMAKE_SYSTEM_PROCESSOR MATCHES "^arm"))
-+if(NE10_BUILD_ARM_ONLY AND GNULINUX_PLATFORM AND (NOT CMAKE_SYSTEM_PROCESSOR MATCHES "^arm"))
++if(False)
      message(FATAL_ERROR "You are trying to compile for non-ARM (CMAKE_SYSTEM_PROCESSOR='${CMAKE_SYSTEM_PROCESSOR}')! see doc/building.md for cross compilation instructions.")
  endif()
  
