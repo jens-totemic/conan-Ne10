@@ -5,11 +5,11 @@ from conans import ConanFile, CMake, tools
 
 class PahocConan(ConanFile):
     name = "Ne10"
-    version = "1.2.2-2018.11.15" # version number rarely changes, so add date
-    #source_subfolder = "sources"
+    version = "1.2.2-2018.11.15"  # version number rarely changes, so add date
+    # source_subfolder = "sources"
     scm = {
         "type": "git",
-        #"subfolder": source_subfolder,
+        # "subfolder": source_subfolder,
         "url": "https://github.com/projectNe10/Ne10.git",
         # latest commit, 2018.11.15 
         "revision": "1f059a764d0e1bc2481c0055c0e71538470baa83"
@@ -25,7 +25,7 @@ class PahocConan(ConanFile):
                        "fPIC": True}
     generators = "cmake"
     exports = "LICENSE"
-    exports_sources = ["01-build-c-only.patch"]
+    exports_sources = ["01-build-c-only.patch", "02-increase-cpuinfo-buffer-size.patch"]
 
     def config_options(self):
         if self.settings.os == "Windows":
@@ -42,7 +42,7 @@ class PahocConan(ConanFile):
                 armOnly = True
                 cmake.definitions["NE10_LINUX_TARGET_ARCH"] = "armv7"
                 cmake.definitions["CMAKE_SYSTEM_PROCESSOR"] = "arm"
-            elif self.settings.arch == "armv8": 
+            elif self.settings.arch == "armv8":
                 armOnly = True
                 cmake.definitions["NE10_LINUX_TARGET_ARCH"] = "aarch64"
                 cmake.definitions["CMAKE_SYSTEM_PROCESSOR"] = "arm"
@@ -56,6 +56,7 @@ class PahocConan(ConanFile):
 
     def build(self):
         tools.patch(patch_file="01-build-c-only.patch")
+        tools.patch(patch_file="02-increase-cpuinfo-buffer-size.patch")
         cmake = self._configure_cmake()
         cmake.build()
 
