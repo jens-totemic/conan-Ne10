@@ -1,5 +1,7 @@
---- modules/NE10_init.c	2020-02-11 13:42:54.754327681 -0800
-+++ modules/NE10_init_fixed.c	2020-02-11 13:43:47.201902486 -0800
+diff --git a/modules/NE10_init.c b/modules/NE10_init.c
+index 8ed94f7..dc42a99 100644
+--- a/modules/NE10_init.c
++++ b/modules/NE10_init.c
 @@ -31,7 +31,7 @@
  
  #include "NE10.h"
