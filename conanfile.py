@@ -3,7 +3,7 @@ import os
 from conans import ConanFile, CMake, tools
 
 
-class PahocConan(ConanFile):
+class Ne10Conan(ConanFile):
     name = "Ne10"
     version = "1.2.2-2020.02.11"  # version number rarely changes, so add date
     # source_subfolder = "sources"
@@ -11,7 +11,7 @@ class PahocConan(ConanFile):
         "type": "git",
         # "subfolder": source_subfolder,
         "url": "https://github.com/projectNe10/Ne10.git",
-        # latest commit, 2018.11.15 
+        # latest commit, 2018.11.15
         "revision": "1f059a764d0e1bc2481c0055c0e71538470baa83"
     }
 
@@ -38,6 +38,8 @@ class PahocConan(ConanFile):
         cmake = CMake(self)
         armOnly = False
         if self.settings.os == "Linux":
+            # Need to manually set this, as the CMake project has no 'conan_setup' step
+            cmake.definitions['CMAKE_POSITION_INDEPENDENT_CODE'] = self.options.fPIC
             if self.settings.arch == "armv7hf":
                 armOnly = True
                 cmake.definitions["NE10_LINUX_TARGET_ARCH"] = "armv7"
@@ -54,9 +56,12 @@ class PahocConan(ConanFile):
         cmake.configure()
         return cmake
 
-    def build(self):
+    def source(self):
+        # The repo is downloaded at this point
         tools.patch(patch_file="01-build-c-only.patch")
         tools.patch(patch_file="02-increase-cpuinfo-buffer-size.patch")
+
+    def build(self):
         cmake = self._configure_cmake()
         cmake.build()
 
