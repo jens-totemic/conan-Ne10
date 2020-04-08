@@ -5,7 +5,7 @@ from conans import ConanFile, CMake, tools
 
 class Ne10Conan(ConanFile):
     name = "Ne10"
-    version = "1.2.2-2020.02.11"  # version number rarely changes, so add date
+    version = "1.2.2-2020.04.08"  # version number rarely changes, so add date
     # source_subfolder = "sources"
     scm = {
         "type": "git",
